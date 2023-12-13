@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('bathrooms')->index();
             $table->integer('storeys')->index();
             $table->integer('garages')->index();
+            $table->boolean('is_main')->default(0)->index();
 
             $table->fullText('name')->language('english');
         });

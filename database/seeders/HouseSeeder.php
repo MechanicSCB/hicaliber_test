@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\House;
+use Faker\Factory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -24,7 +25,7 @@ class HouseSeeder extends Seeder
                 continue;
             }
 
-            $row = [];
+            $row = ['is_main' => true];
 
             foreach ($fields as $key => $field) {
                 $row[strtolower($field)] = $data[$key];
@@ -38,5 +39,28 @@ class HouseSeeder extends Seeder
         House::query()->truncate();
         House::query()->insert($houses);
 
+        // $this->seedBigData();
+    }
+    public function seedBigData(): void
+    {
+        $n = 1000000;
+        $houses = [];
+        $faker = Factory::create();
+
+        for ($i = 10; $i <= $n; $i++) {
+            $houses[] = [
+                'id' => $i,
+                'name' => $faker->unique()->address,
+                'price' => rand(100000, 1000000),
+                'bedrooms' => rand(1, 8),
+                'bathrooms' => rand(1, 5),
+                'storeys' => rand(1, 4),
+                'garages' => rand(1, 4),
+            ];
+        }
+
+        foreach (array_chunk($houses, 1000) as $chunk) {
+            House::query()->upsert($chunk, ['id']);
+        }
     }
 }

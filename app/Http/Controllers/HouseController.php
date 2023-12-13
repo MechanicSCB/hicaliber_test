@@ -5,14 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Inertia\Response;
+use Inertia\ResponseFactory;
 
 class HouseController extends Controller
 {
+    public function index(): Response|ResponseFactory
+    {
+        return inertia('Houses/Index');
+    }
+
     public function getData(Request $request): string
     {
         $searchString = Str::squish(preg_replace("/[^A-Za-z0-9 ]/", ' ', $request['search']));
 
         $housesQuery = DB::table('houses');
+
+        if (@$request['showBigData'] === 'false') {
+            $housesQuery->where('is_main', true);
+        }
 
         // Filter
         if (@$searchString) {

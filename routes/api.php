@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HouseController::class, 'getData']);
+Route::get('/get-data', [HouseController::class, 'getData'])->name('houses.get-data');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
