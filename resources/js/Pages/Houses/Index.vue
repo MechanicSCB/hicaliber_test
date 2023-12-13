@@ -77,7 +77,7 @@ function acInputChange() {
 const querySearch = (queryString, callback) => {
     submit();
 
-    fetch('/get-hints?search=' + queryString).then(function (response) {
+    fetch('/api/get-hints?search=' + queryString).then(function (response) {
         response.text().then(function (hints) {
             callback(JSON.parse(hints))
         });
