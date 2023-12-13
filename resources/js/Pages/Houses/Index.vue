@@ -5,6 +5,10 @@ import 'element-plus/dist/index.css'
 import {ElAutocomplete, ElCheckbox, ElInput, ElOption, ElPagination, ElSelect, ElSlider} from 'element-plus'
 import {getUrlParameter} from "@/Functions/getUrlParameter.js";
 import {objectToQueryString} from "@/Functions/objectToQueryString.js";
+import BedIcon from "@/Svg/BedIcon.vue";
+import BathroomIcon from "@/Svg/BathroomIcon.vue";
+import StoreysIcon from "@/Svg/StoreysIcon.vue";
+import GaragesIcon from "@/Svg/GaragesIcon.vue";
 
 let queryString = window.location.search.substring(1);
 const filterOptions = {
@@ -152,13 +156,20 @@ const handleSelect = () => {
             </div>
         </form>
 
-        <el-pagination @current-change="submit" v-model:current-page="form.page" layout="prev, pager, next" :page-size="houses.per_page" :total="houses.total" />
+        <el-pagination
+            class="mt-4"
+            @current-change="submit"
+            v-model:current-page="form.page"
+            layout="prev, pager, next"
+            :page-size="houses.per_page"
+            :total="houses.total"
+        />
 
-        <div class="w-full flex justify-between">
+        <div class="mt-3 w-full flex justify-between">
             <div class="text-sm">
                 <b class="text-base">
                     {{ houses.total?.toLocaleString() }}</b> founded
-                    ({{ houses.to - houses.from + 1 }} showed from {{ houses.from?.toLocaleString() }}
+                ({{ houses.to - houses.from + 1 }} showed from {{ houses.from?.toLocaleString() }}
                 to {{ houses.to?.toLocaleString() }})
             </div>
             <div class="flex items-center gap-2">
@@ -171,20 +182,42 @@ const handleSelect = () => {
             <div class="flex py-2 px-2 gap-2 font-semibold">
                 <span class="w-[450px]">Name</span>
                 <span class="w-[100px]">Price</span>
-                <span class="w-[50px]">bd</span>
-                <span class="w-[50px]">bt</span>
-                <span class="w-[50px]">st</span>
-                <span class="w-[50px]">gr</span>
+                <span class="w-[50px] flex flex-col justify-center items-center">
+                    <BedIcon class="w-5" title="bedrooms"/>
+                    <span class="text-[9px]">bedrooms</span>
+                </span>
+                <span class="w-[50px] flex flex-col justify-center items-center">
+                    <BathroomIcon class="w-5" title="bathrooms"/>
+                    <span class="text-[9px]">bathrooms</span>
+                </span>
+                <span class="w-[50px] flex flex-col justify-center items-center">
+                    <StoreysIcon class="w-6" title="storeys"/>
+                    <span class="text-[9px]">storeys</span>
+                </span>
+                <span class="w-[50px] flex flex-col justify-center items-center">
+                    <GaragesIcon class="w-6" title="garages"/>
+                    <span class="text-[9px]">garages</span>
+                </span>
             </div>
-            <div v-for="(house, index) in houses.data" :key="house.id" class="py-1 px-2 text-gray-950 flex gap-2" :class="index%2 ? 'bg-sky-100' : 'bg-sky-50'">
+            <div v-for="(house, index) in houses.data" :key="house.id" class="py-1 px-2 text-gray-950 flex gap-2"
+                 :class="index%2 ? 'bg-sky-100' : 'bg-sky-50'">
                 <span class="w-[450px]">{{ house.name }}</span>
                 <span class="w-[100px]">${{ house.price.toLocaleString() }}</span>
-                <span class="w-[50px]">{{ house.bedrooms }}</span>
-                <span class="w-[50px]">{{ house.bathrooms }}</span>
-                <span class="w-[50px]">{{ house.storeys }}</span>
-                <span class="w-[50px]">{{ house.garages }}</span>
+                <span class="w-[50px] text-center">{{ house.bedrooms }}</span>
+                <span class="w-[50px] text-center">{{ house.bathrooms }}</span>
+                <span class="w-[50px] text-center">{{ house.storeys }}</span>
+                <span class="w-[50px] text-center">{{ house.garages }}</span>
             </div>
         </div>
+
+        <el-pagination
+            class="mt-4"
+            @current-change="submit"
+            v-model:current-page="form.page"
+            layout="prev, pager, next"
+            :page-size="houses.per_page"
+            :total="houses.total"
+        />
     </div>
 </template>
 <style>
