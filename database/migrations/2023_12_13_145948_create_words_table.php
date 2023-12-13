@@ -16,7 +16,10 @@ return new class extends Migration
             $table->text('word');
         });
 
-        DB::statement("create extension pg_trgm;");
+        if(DB::select("SELECT COUNT(*) FROM pg_extension WHERE extname = 'pg_trgm';")[0]->count === 0){
+            DB::statement("create extension pg_trgm;");
+        }
+
         DB::statement("CREATE INDEX words_idx ON words USING GIN (word gin_trgm_ops);");
     }
 

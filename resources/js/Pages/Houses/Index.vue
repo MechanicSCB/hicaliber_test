@@ -34,10 +34,25 @@ onMounted(() => {
 });
 
 let getData = () => {
+    // axios.get('/api/get-data', {
+    //     params: form.data()
+    // }).then((response) => {
+    //     houses.value = response.data;
+    // });
     axios.get('/api/get-data', {
         params: form.data()
     }).then((response) => {
         houses.value = response.data;
+    }).catch(function (error) {
+        if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+        } else if (error.request) {
+            console.log(error.request);
+        } else {
+            console.log('Error', error.message);
+        }
     });
 }
 
@@ -91,10 +106,9 @@ const handleSelect = () => {
 </script>
 <template>
     <div class="py-6 px-10 mx-auto w-[900px]">
-        <Link href="/">Logo</Link>
         <form>
             <!-- Search -->
-            <div class="flex items-center gap-4">
+            <div class="mt-2 flex items-center gap-4">
                 <el-checkbox v-model="showHints" label="show hints"/>
                 <el-autocomplete
                     id="acInput"
@@ -147,7 +161,10 @@ const handleSelect = () => {
                     ({{ houses.to - houses.from + 1 }} showed from {{ houses.from?.toLocaleString() }}
                 to {{ houses.to?.toLocaleString() }})
             </div>
-            <el-checkbox @change="submit" v-model="form.showBigData" label="showBigData"/>
+            <div class="flex items-center gap-2">
+                <Link href="/" class="">Reset All</Link>
+                <el-checkbox @change="submit" v-model="form.showBigData" label="showBigData"/>
+            </div>
         </div>
 
         <div class="mt-2 w-full border rounded">

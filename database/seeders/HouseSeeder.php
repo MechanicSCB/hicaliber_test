@@ -39,11 +39,10 @@ class HouseSeeder extends Seeder
         House::query()->truncate();
         House::query()->insert($houses);
 
-        // $this->seedBigData();
+        $this->seedBigData(1000000);
     }
-    public function seedBigData(): void
+    public function seedBigData($n = 1000000): void
     {
-        $n = 1000000;
         $houses = [];
         $faker = Factory::create();
 

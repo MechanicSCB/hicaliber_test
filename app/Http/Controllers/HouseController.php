@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\HouseRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -15,7 +16,7 @@ class HouseController extends Controller
         return inertia('Houses/Index');
     }
 
-    public function getData(Request $request): string
+    public function getData(HouseRequest $request): string
     {
         $searchString = Str::squish(preg_replace("/[^A-Za-z0-9 ]/", ' ', $request['search']));
 
