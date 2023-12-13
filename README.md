@@ -26,7 +26,7 @@ sail npm i
 ```
 sail npm run build
 ```
-- Warning: seeding 1 million rows can take a significant amount of time.
+- Warning: seeding 1 million rows can take a significant amount of time (~ 2 minutes).
 - To reduce the amount of test data, change the line 42
 in database/seeders/HouseSeeder.php
 ```
